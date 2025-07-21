@@ -1,5 +1,5 @@
 from typing import List, Optional, Dict, Type
-from .units import Unit, Pikeman, Archer, Knight, create_unit
+from .units import Unit, Pikeman, Archer, Knight
 from .civilizations import Civilization
 from .battle import BattleRecord, BattleSystem
 
@@ -117,7 +117,13 @@ class Army:
         
         # Remove old unit and create new one
         self._units.remove(unit)
-        new_unit = create_unit(target_type, unit.age_in_years)
+        # Create new unit based on target type
+        if target_type == "Archer":
+            new_unit = Archer(unit.age_in_years)
+        elif target_type == "Knight":
+            new_unit = Knight(unit.age_in_years)
+        else:
+            new_unit = Pikeman(unit.age_in_years)
         self._units.append(new_unit)
         self._gold -= transformation_cost
         
